@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Duplicate in Array</h1>
+    <input
+      type="text"
+      placeholder="Enter Numbers with ',' Separated"
+      id="inp" />
+    <button type="button" onclick="clicked()">Action</button>
+    <div id="root"></div>
+    <script>
+      function clicked() {
+        let input = document.getElementById("inp").value;
+        let res = document.getElementById("root");
+        res.innerHTML = "";
+        const arr = input.split(",").map(Number);
+
+        const frequencyMap = {};
+        arr.forEach((num) => {
+          if (frequencyMap[num]) {
+            frequencyMap[num]++;
+          } else {
+            frequencyMap[num] = 1;
+          }
+        });
+
+        const duplicates = [];
+        Object.keys(frequencyMap).forEach((key) => {
+          if (frequencyMap[key] > 1) {
+            duplicates.push({
+              number: parseInt(key),
+              count: frequencyMap[key],
+            });
+          }
+        });
+        let ans = [];
+        res.innerHTML += "Duplicate numbers and their counts:<br/>";
+        duplicates.forEach((duplicate) => {
+          ans.push(`${duplicate.number}: ${duplicate.count}`);
+        });
+        res.innerHTML += ans;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hover Effect</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: #3498db;
+        transition: transform 0.3s ease; /* Add smooth transition for transform */
+        position: absolute;
+        cursor: move;
+      }
+
+      .box:hover {
+        transform: scale(1.2); /* Increase size on hover */
+      }
+    </style>
+  </head>
+  <body style="display: flex; justify-content: center">
+    <div class="box" draggable="true"></div>
+  </body>
+</html>
