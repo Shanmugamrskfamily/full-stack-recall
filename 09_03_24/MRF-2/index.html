@@ -34,16 +34,20 @@
           if (frequencyMap[key] > 1) {
             duplicates.push({
               number: parseInt(key),
-              count: frequencyMap[key],
+              count: parseInt(frequencyMap[key]),
             });
           }
         });
+
         let ans = [];
         res.innerHTML += "Duplicate numbers and their counts:<br/>";
         duplicates.forEach((duplicate) => {
-          ans.push(`${duplicate.number}: ${duplicate.count}`);
+          ans.push(`${duplicate.number}:${duplicate.count}`);
         });
         res.innerHTML += ans;
+        console.log(arr);
+        console.log(ans);
+        console.log(typeof ans);
       }
     </script>
   </body>
