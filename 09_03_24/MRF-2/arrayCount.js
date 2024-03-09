@@ -1,8 +1,7 @@
-function countOccurrences(arr) {
-    
+const countOccurrences = (arr) => {
     let counts = {};
 
-    arr.forEach(function(number) {
+    arr.forEach(number => {
         if (counts[number]) {
             counts[number]++;
         } else {
@@ -10,12 +9,15 @@ function countOccurrences(arr) {
         }
     });
 
-    let ans=[];
+    console.log(counts);
+
+    let ans = [];
     for (let number in counts) {
         ans.push(`${number}:${counts[number]}`);
     }
+
     console.log(ans);
-    console.log(typeof(ans));
+    console.log(Array.isArray(ans));
 }
 
 let numbers = [4, 2, 3, 4, 5, 1, 2, 3, 1, 2, 1];
