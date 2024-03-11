@@ -6,7 +6,7 @@ const findRepeat=(ar)=>{
     ar.forEach(num => {
 
         if(counts[num]){
-            counts[num]++
+            counts[num]++;
         }
         else{
             counts[num]=1;

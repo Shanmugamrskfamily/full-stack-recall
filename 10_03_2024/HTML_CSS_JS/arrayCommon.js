@@ -1,8 +1,9 @@
-let ar1=[1,5,6,10,12,1], ar2=[2,3,4,5,6,7,8,9]
+let ar1=[1, 2, 2, 2, 3, 4, 5], ar2=[1, 2, 4, 5];
 
 const findCommon=(ar1,ar2)=>{
     let common=ar1.filter((num)=>ar2.includes(num));
-    return common;
+    let unique= common.filter((val,index,self)=>self.indexOf(val)===index);
+    return unique;
 }
 
 console.log(findCommon(ar1,ar2));
