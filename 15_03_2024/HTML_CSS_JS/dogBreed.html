@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Breeds</title>
+  </head>
+  <body>
+    <h1>Dogs Breeds List</h1>
+    <table id="breedTable">
+      <thead>
+        <tr>
+          <th>Breed</th>
+          <th>Sub Breed</th>
+        </tr>
+      </thead>
+      <tbody id="breedsList"></tbody>
+    </table>
+    <script>
+      let api = "https://dog.ceo/api/breeds/list/all";
+      let fetchedData = async () => {
+        try {
+          let res = await fetch(api);
+          let data = await res.json();
+          console.log(data);
+          let breedsList = document.getElementById("breedsList");
+          let ul = document.createElement("ul");
+          let breeds = Object.keys(data.message);
+          breeds.forEach((breed) => {
+            let li = document.createElement("li");
+            li.textContent = breed;
+            ul.appendChild(li);
+          });
+          breedsList.appendChild(ul);
+          //   breedsList.appendChild(ul);
+          //   let breedsList = document.getElementById("breedsList");
+          //   let breedTable = document.getElementById("breedTable");
+          //   let breeds = data.message;
+          //   for (let breed in breeds) {
+          //     if (breeds[breed].length === 0) {
+          //       let row = breedsList.insertRow();
+          //       let breedCell = row.insertCell(0);
+          //       let nameCell = row.insertCell(1);
+          //       breedCell.textContent = breed;
+          //       nameCell.textContent = "-";
+          //     } else {
+          //       breeds[breed].forEach((subBreed) => {
+          //         let row = breedsList.insertRow();
+          //         let breedCell = row.insertCell(0);
+          //         let nameCell = row.insertCell(1);
+          //         breedCell.textContent = breed;
+          //         nameCell.textContent = subBreed;
+          //       });
+          //     }
+          //   }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchedData();
+    </script>
+  </body>
+</html>
