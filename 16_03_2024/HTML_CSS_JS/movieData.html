@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Search</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Movie Search</h1>
+    <input type="text" id="search" placeholder="Search by year..." />
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="moviesTable">
+        <!-- Movie data will be inserted here -->
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const tbody = document.getElementById("moviesTable");
+        const search = document.getElementById("search");
+
+        search.addEventListener("input", searchData);
+
+        async function fetchData() {
+          const res = await fetch(
+            "https://gitlab.com/gvanderput/gerard-movie-filtering/-/raw/master/data/movies.json",
+          );
+          const data = await res.json();
+          return data;
+        }
+
+        const moviesData = fetchData();
+
+        moviesData.then((res) => {
+          res.forEach((movie) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                        <td>${movie.title}</td>
+                        <td>${movie.year}</td>
+                        <td>${movie.description}</td>
+                    `;
+            tbody.appendChild(tr);
+          });
+        });
+
+        function searchData() {
+          const searchTerm = search.value.toLowerCase();
+
+          moviesData.then((resp) => {
+            tbody.innerHTML = "";
+            resp.forEach((movie) => {
+              if (movie.year.toString().includes(searchTerm)) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                                <td>${movie.title}</td>
+                                <td>${movie.year}</td>
+                                <td>${movie.description}</td>
+                            `;
+                tbody.appendChild(tr);
+              }
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

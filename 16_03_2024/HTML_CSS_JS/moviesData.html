@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Movies Data</h1>
+    <div>
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Year</th>
+          <th>Description</th>
+        </thead>
+        <tbody id="movieTable"></tbody>
+      </table>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let movieTable = document.getElementById("movieTable");
+        async function fetchData() {
+          let res = await fetch(
+            "https://gitlab.com/gvanderput/gerard-movie-filtering/-/raw/master/data/movies.json",
+          );
+          let data = await res.json();
+          console.log(data);
+          return data;
+        }
+        const movieData = fetchData();
+        movieData.then((res) => {
+          res.forEach((movie) => {
+            const tr = document.createElement("tr");
+            if (movie.year >= 0) {
+              tr.innerHTML = `<td>${movie.title}</td>
+                <td>${movie.year}</td>
+                <td>${movie.description}</td>`;
+            }
+            movieTable.appendChild(tr);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
