@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Breeds</title>
+  </head>
+  <body>
+    <h1>Dog Breeds</h1>
+    <div id="root"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let root = document.getElementById("root");
+
+        try {
+          let res = await fetch("https://dog.ceo/api/breeds/list/all");
+          let data = await res.json();
+
+          let ul = document.createElement("ul");
+          let breeds = Object.keys(data.message);
+
+          breeds.forEach((breed) => {
+            let li = document.createElement("li");
+            li.textContent = breed;
+
+            if (data.message[breed].length > 0) {
+              let subUl = document.createElement("ul");
+              data.message[breed].forEach((subBreed) => {
+                let subLi = document.createElement("li");
+                subLi.textContent = subBreed;
+                subUl.appendChild(subLi);
+              });
+              li.appendChild(subUl);
+            }
+
+            ul.appendChild(li);
+          });
+
+          root.appendChild(ul);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
