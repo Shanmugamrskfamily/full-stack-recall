@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock</title>
+  </head>
+  <body>
+    <h1>Stock Data</h1>
+    <div>
+      <label for="date">Enter Date in DD/MM/YYYY</label>
+      <input type="date" name="date" id="date" />
+      <button type="button" onclick="getStocks()">Get Stock Data</button>
+      <p id="stock_data"></p>
+    </div>
+    <script>
+      async function getStocks() {
+        let inp = new Date(document.getElementById("date").value);
+        function formattedDate() {
+          let day = inp.getDate();
+          let month = inp.getMonth();
+          let year = inp.getFullYear();
+          let monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          let formattedDate = `${day}-${monthNames[month]}-${year}`;
+          return formattedDate;
+        }
+        let stockDataElement = document.getElementById("stock_data");
+        try {
+          let res = await fetch(
+            `https://jsonmock.hackerrank.com/api/stocks?date=${formattedDate()}`,
+          );
+          let data = await res.json();
+          let values = data.data;
+          console.log(values);
+          let ul = document.createElement("ul");
+          values.forEach((value) => {
+            ul.innerHTML = `
+                        <li>Date: ${value.date}</li>
+                        <li>Open: ${value.open}</li>
+                        <li>Close: ${value.close}</li>
+                        <li>High: ${value.high}</li>
+                        <li>Low: ${value.low}</li>`;
+          });
+          stockDataElement.innerHTML = "";
+          if (values.length === 0) {
+            stockDataElement.innerHTML = `<h3>No Data Found!</h3>`;
+          }
+          stockDataElement.appendChild(ul);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
