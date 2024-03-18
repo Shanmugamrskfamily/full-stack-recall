@@ -37,6 +37,10 @@
 
       #movie_body tr:hover {
         background-color: #e0e0e0;
+        cursor: pointer;
+      }
+      #movie_body tr:active {
+        cursor: progress;
       }
     </style>
     <title>Movie Data</title>
@@ -63,9 +67,9 @@
           console.log(data);
           data.forEach((movie) => {
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${movie.title}</tr>
-                <td>${movie.year}</tr>
-                    <td>${movie.description}</tr>`;
+            tr.innerHTML = `<td>${movie.title}</td>
+                <td>${movie.year}</td>
+                    <td>${movie.description}</td>`;
             movie_body.appendChild(tr);
           });
         } catch (error) {
