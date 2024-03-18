@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stocks</title>
+  </head>
+  <body>
+    <h1>Stock Data</h1>
+    <form action="stocks" onsubmit="getdata(event)">
+      <label for="date">Select Date</label>
+      <input type="date" name="date" id="date" required />
+      <button type="submit">Get Stock Data</button>
+    </form>
+
+    <div id="stock_data"></div>
+    <script>
+      async function getdata(e) {
+        e.preventDefault();
+        let inp = new Date(document.getElementById("date").value);
+        let stock_data = document.getElementById("stock_data");
+        let day = inp.getDate();
+        let month = inp.getMonth();
+        let year = inp.getFullYear();
+        let monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        let formatedDate = `${day}-${monthNames[month]}-${year}`;
+        try {
+          const res = await fetch(
+            `https://jsonmock.hackerrank.com/api/stocks?date=${formatedDate}`,
+          );
+          const data = await res.json();
+          console.log(data);
+          let stockData = data.data;
+          stock_data.innerHTML = "";
+          let ul = document.createElement("ul");
+          stockData.forEach((data) => {
+            let li = document.createElement("li");
+            li.innerHTML = `
+            <strong>Date:</strong> ${data.date}<br>
+            <strong>Open:</strong> ${data.open}<br>
+            <strong>High:</strong> ${data.high}<br>
+            <strong>Low:</strong> ${data.low}<br>
+            <strong>Close:</strong> ${data.close}<br>
+          `;
+            ul.appendChild(li);
+          });
+          stock_data.appendChild(ul);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>

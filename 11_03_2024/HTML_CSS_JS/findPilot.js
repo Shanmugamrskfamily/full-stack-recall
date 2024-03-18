@@ -57,15 +57,17 @@ let pilots=[
     ];
 
     const findExperienced=(pilots)=>{
-        let mostExperienced = [pilots[0]];
-        for(let i=0;i<pilots.length;i++){
-            if(pilots[i].experience>mostExperienced[0].experience){
-                mostExperienced.push(pilots[i]);
-            }
-            else if(pilots[i].experience===mostExperienced[0].experience){
-                mostExperienced.push(pilots[i]);
-            }
-        }
+        let mostExperienced=[];
+        let highestExperience=pilots[0].experience;
+        pilots.forEach(pilot=>{
+          if(pilot.experience>highestExperience){
+            highestExperience=pilot.experience;
+            mostExperienced=pilot;
+          }
+          else if(pilot.experience===highestExperience){
+            mostExperienced.push(pilot);
+          }
+        });
         return mostExperienced;
     }
 

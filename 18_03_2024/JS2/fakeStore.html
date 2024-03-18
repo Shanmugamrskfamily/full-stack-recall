@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .card {
+        width: calc(32.33% - 20px);
+        margin-bottom: 20px;
+        background-color: #b3acac;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card img {
+        width: 60%;
+        height: 60%;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .card h3 {
+        font-size: 18px;
+        margin: 10px;
+      }
+
+      .card p {
+        font-size: 14px;
+        margin: 10px;
+      }
+
+      .card button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 768px) {
+        .card {
+          width: calc(50% - 20px);
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .card {
+          width: 100%;
+        }
+      }
+    </style>
+    <title>Store Products</title>
+  </head>
+  <body>
+    <h1>Products</h1>
+    <div class="container">
+      <div id="products" class="products"></div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let products = document.getElementById("products");
+        try {
+          const res = await fetch("https://fakestoreapi.com/products");
+          const data = await res.json();
+          console.log(data);
+          data.forEach((product) => {
+            let card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `<img src="${product.image}"/>
+            <h3>${product.title}</h3>
+            <p>${product.description}</p>
+            <p>${product.price}</p>
+            <button type="button" class="btn btn-primary">Buy Now</button>`;
+            products.appendChild(card);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
