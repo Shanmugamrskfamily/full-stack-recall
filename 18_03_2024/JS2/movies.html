@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      #movie_table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+      }
+
+      #movie_table th,
+      #movie_table td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+
+      #movie_table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      #movie_body tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      #movie_body tr:hover {
+        background-color: #e0e0e0;
+      }
+    </style>
+    <title>Movie Data</title>
+  </head>
+  <h1>All Movies</h1>
+  <body>
+    <table id="movie_table">
+      <thead>
+        <th>Movie Name</th>
+        <th>Year</th>
+        <th>Description</th>
+      </thead>
+      <tbody id="movie_body"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let movie_body = document.getElementById("movie_body");
+        movie_body.innerHTML = "";
+        try {
+          const res = await fetch(
+            "https://gitlab.com/gvanderput/gerard-movie-filtering/-/raw/master/data/movies.json",
+          );
+          const data = await res.json();
+          console.log(data);
+          data.forEach((movie) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${movie.title}</tr>
+                <td>${movie.year}</tr>
+                    <td>${movie.description}</tr>`;
+            movie_body.appendChild(tr);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
