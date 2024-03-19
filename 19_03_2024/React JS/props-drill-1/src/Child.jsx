@@ -29,7 +29,7 @@ function Child(props) {
             <p>Message From GrandChild: {fromGrandChild}</p>
         </div>
         <div>
-            <label htmlFor="message">Enter Message to Send</label>
+            <label htmlFor="msg" style={{marginRight:'10px'}}>Enter Message to Send</label>
             <input type="text" value={msg} onChange={(e)=>setMsg(e.target.value)}/>
             <br />
             <button onClick={handleChildToParent}>Send to Parent</button>
