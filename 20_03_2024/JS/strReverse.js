@@ -2,7 +2,7 @@ let str='codecode';
 
 function strReverse(){
 if(str.length>=100||str.length<=1){
-    console.log('String Length Not Meet!');
+    console.log('String Length Not in range between 1 to 100');
     return;
 }
 
