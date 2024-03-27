@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .card {
+        width: 300px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .card img {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .card p {
+        margin: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          width: calc(50% - 20px);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          width: calc(100% - 20px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>All Products</h1>
+    <div class="container" id="product-container"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let container = document.getElementById("product-container");
+        try {
+          let res = await fetch("https://fakestoreapi.com/products");
+          let data = await res.json();
+          console.log(data);
+          data.forEach((product) => {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            card.innerHTML = `<img src='${product.image}'/>
+            <p>${product.id}</p>
+            <p>${product.title}</p>
+            <p>$${product.price}</p>
+            <p>${product.description}</p>`;
+            container.appendChild(card);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>

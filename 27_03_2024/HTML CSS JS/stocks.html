@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Data</title>
+  </head>
+  <body>
+    <h1>Stock Data</h1>
+    <label for="date">Select Date</label>
+    <input type="date" id="date" />
+    <button type="button" onclick="getData()">Get Data</button>
+    <div id="root"></div>
+    <script>
+      function getData() {
+        let root = document.getElementById("root");
+        let date = new Date(document.getElementById("date").value);
+        let day = date.getDay();
+        let months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        let formatedDate = `${day}-${months[month]}-${year}`;
+        async function stockData() {
+          try {
+            let res = await fetch(
+              `https://jsonmock.hackerrank.com/api/stocks?date=${formatedDate}`,
+            );
+            let data = await res.json();
+            console.log(data.data[0]);
+            let stocks = data.data[0];
+            let ul = document.createElement("ul");
+
+            ul.innerHTML = `<li><b>Date: </b>${stocks.date}</li>
+                <li><b>Open: </b>${stocks.open}</li>
+                <li><b>Close: </b>${stocks.close}</li>
+                <li><b>High: </b>${stocks.high}</li>
+                <li><b>Low: </b>${stocks.low}</li>`;
+
+            root.innerHTML = "";
+            root.appendChild(ul);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        stockData();
+      }
+    </script>
+  </body>
+</html>
