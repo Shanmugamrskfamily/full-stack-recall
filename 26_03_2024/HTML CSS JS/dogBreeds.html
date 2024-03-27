@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Reset default margin and padding */
+      body,
+      h1,
+      table,
+      th,
+      td {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-decoration: underline;
+      }
+
+      /* Center the table */
+      table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 80%;
+        max-width: 800px;
+      }
+
+      /* Style the table header */
+      thead th {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+
+      /* Style the table body */
+      tbody td {
+        text-align: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+
+      /* Alternate row colors */
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      /* Highlight on hover */
+      tbody tr:hover {
+        background-color: #f5f5f5;
+      }
+    </style>
+    <title>Dog Breeds</title>
+  </head>
+  <body>
+    <h1>Dog Breeds List</h1>
+    <table>
+      <thead>
+        <th>S.No</th>
+        <th>Breed Name</th>
+        <th>Sub-Breed</th>
+      </thead>
+      <tbody id="breed-table"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let tbody = document.getElementById("breed-table");
+        let isLoading = true;
+        if (isLoading) {
+          tbody.innerHTML = `<h1 style="text-align: center;">Loading...</h1>`;
+        }
+        try {
+          let res = await fetch("https://dog.ceo/api/breeds/list/all");
+          let data = await res.json();
+          let breeds = Object.keys(data.message);
+          tbody.innerHTML = "";
+          breeds.forEach((breed, index) => {
+            let tr = document.createElement("tr");
+            let sno = document.createElement("td");
+            sno.textContent = index + 1;
+            let breedCell = document.createElement("td");
+            breedCell.textContent = breed.toUpperCase();
+            let subBreed = document.createElement("td");
+            subBreed.textContent = data.message[breed].join(", ");
+            tr.appendChild(sno);
+            tr.appendChild(breedCell);
+            tr.appendChild(subBreed);
+            tbody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
