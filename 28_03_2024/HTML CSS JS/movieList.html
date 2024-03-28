@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 10px;
+        padding: 15px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      thead th {
+        background-color: #f2f2f2;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+      }
+
+      tbody td {
+        padding: 8px;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #fdf3f3;
+      }
+
+      tbody tr:hover {
+        background-color: #d9d9d9;
+        cursor: pointer;
+      }
+      tbody tr:active {
+        cursor: text;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>List of Movies</h1>
+    <table>
+      <thead>
+        <th>S.No</th>
+        <th>Movie Title</th>
+        <th>Year</th>
+        <th>Movie Description</th>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let tbody = document.getElementById("tbody");
+        try {
+          let res = await fetch(
+            "https://gitlab.com/gvanderput/gerard-movie-filtering/-/raw/master/data/movies.json",
+          );
+          let data = await res.json();
+          console.log(data);
+          let movieData = data;
+          movieData.forEach((movie, index) => {
+            let tr = document.createElement("tr");
+            let sno = document.createElement("td");
+            let title = document.createElement("td");
+            let year = document.createElement("td");
+            let description = document.createElement("td");
+
+            if (movie.title.toLowerCase().startsWith("t")) {
+              sno.textContent = index + 1;
+              title.textContent = movie.title;
+              year.textContent = movie.year;
+              description.textContent = movie.description;
+
+              tr.appendChild(sno);
+              tr.appendChild(title);
+              tr.appendChild(year);
+              tr.appendChild(description);
+            }
+
+            tbody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>

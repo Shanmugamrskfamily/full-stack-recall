@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Breeds</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      td,
+      th {
+        border: 1px solid black;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dogs and Breeds List</h1>
+    <table>
+      <thead>
+        <th>S.No</th>
+        <th>Breed</th>
+        <th>Sub-Breed</th>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let tbody = document.getElementById("tbody");
+        try {
+          let res = await fetch("https://dog.ceo/api/breeds/list/all");
+          let data = await res.json();
+          let breedData = data.message;
+          let breeds = Object.keys(breedData);
+          breeds.forEach((breed, index) => {
+            let tr = document.createElement("tr");
+            let sno = document.createElement("td");
+            let breedName = document.createElement("td");
+            let subBreed = document.createElement("td");
+
+            sno.textContent = index + 1;
+            breedName.textContent = breed.toUpperCase();
+            subBreed.textContent = breedData[breed].join(", ");
+
+            tr.appendChild(sno);
+            tr.appendChild(breedName);
+            tr.appendChild(subBreed);
+
+            tbody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
