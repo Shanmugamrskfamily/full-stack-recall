@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toogle Message</title>
+    <style>
+      #msg {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button type="button" onclick="showMsg()">Toggle Message</button>
+    </div>
+    <p id="msg">You Clicked Button to Show Message!</p>
+    <script>
+      function showMsg() {
+        let msg = document.getElementById("msg");
+        msg.style.display = msg.style.display === "none" ? "block" : "none";
+      }
+    </script>
+  </body>
+</html>

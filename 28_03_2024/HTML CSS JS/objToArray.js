@@ -1,6 +1,6 @@
 let obj={USD:1234, IMD:345};
 
-const ar=Object.keys(obj).map((key,index)=>{
+let ar=Object.keys(obj).map((key,index)=>{
     return{
         id:key,
         value:obj[key],
@@ -8,6 +8,4 @@ const ar=Object.keys(obj).map((key,index)=>{
     }
 });
 
-console.log('Array:',ar);
-
-console.log(Array.isArray(ar));
+console.log(ar);
