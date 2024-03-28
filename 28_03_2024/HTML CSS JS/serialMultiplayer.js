@@ -2,7 +2,7 @@ const n=4;
 const numbers=[4,5,7,2];
 
 class serialMultiplayer{
-    
+
     constructor(first=1,second=1,third=1,forth=1,fifth=1){
         this.first=first;
         this.second=second;
@@ -17,39 +17,38 @@ class serialMultiplayer{
     }
 }
 
-function calculateMultiplay(n,numbers){
-
+function calculate(n,numbers){
     if(n<1||n>5||numbers.length!==n){
-        console.log('Invalid Input!');
-        return;
+        return 'Invalid Input!';
     }
 
     let multiplayer;
 
-    switch (n){
+    switch(n){
 
         case 1:
             multiplayer=new serialMultiplayer(numbers[0]);
-            break;
+        break;
 
         case 2:
             multiplayer=new serialMultiplayer(numbers[0],numbers[1]);
-            break;
+        break;
 
         case 3:
             multiplayer=new serialMultiplayer(numbers[0],numbers[1],numbers[2]);
-            break;
+        break;
 
         case 4:
             multiplayer=new serialMultiplayer(numbers[0],numbers[1],numbers[2],numbers[3]);
-            break;
+        break;
 
         case 5:
             multiplayer=new serialMultiplayer(numbers[0],numbers[1],numbers[2],numbers[3],numbers[4]);
-            break;
+        break;
     }
 
     return multiplayer.toString();
 }
 
-console.log(calculateMultiplay(n,numbers));
+
+console.log(calculate(n,numbers));
