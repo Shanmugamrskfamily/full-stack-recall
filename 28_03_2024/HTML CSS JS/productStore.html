@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Listing</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .card {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        width: 300px;
+        padding: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .card img {
+        width: 100%;
+        height: 250px;
+      }
+
+      .card h3 {
+        margin: 10px 0;
+      }
+
+      .card p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Product Listing</h1>
+    <div class="container" id="productContainer"></div>
+
+    <script>
+      async function fetchData(url) {
+        try {
+          const response = await fetch(url);
+          return await response.json();
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          return [];
+        }
+      }
+
+      async function renderProducts() {
+        const productContainer = document.getElementById("productContainer");
+        const products = await fetchData("https://fakestoreapi.com/products");
+
+        products.forEach((product) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          const image = document.createElement("img");
+          image.src = product.image;
+          image.alt = product.title;
+
+          const title = document.createElement("h3");
+          title.textContent = product.title;
+
+          const price = document.createElement("p");
+          price.textContent = `$${product.price}`;
+
+          const category = document.createElement("p");
+          category.textContent = `Category: ${product.category}`;
+
+          card.appendChild(image);
+          card.appendChild(title);
+          card.appendChild(price);
+          card.appendChild(category);
+
+          productContainer.appendChild(card);
+        });
+      }
+
+      renderProducts();
+    </script>
+  </body>
+</html>

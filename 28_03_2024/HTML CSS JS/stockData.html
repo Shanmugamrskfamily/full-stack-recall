@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th,
+      table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+
+      thead th {
+        background-color: #f2f2f2;
+      }
+
+      tbody td {
+        background-color: #fff;
+      }
+
+      tbody tr:nth-child(even) td {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:hover td {
+        background-color: #f0f0f0;
+      }
+
+      #tbody td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Stock Data</h2>
+    <form onsubmit="getData(); return false;">
+      <label for="date">Select Date</label>
+      <input type="date" id="date" required />
+      <button type="submit">Get Data</button>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Open</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Close</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      async function getData() {
+        let tbody = document.getElementById("tbody");
+        let date = new Date(document.getElementById("date").value);
+        let day = date.getDate();
+        let months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        let month = date.getMonth();
+        let year = date.getFullYear();
+
+        let formattedDate = `${day}-${months[month]}-${year}`;
+
+        try {
+          tbody.innerHTML = "";
+          let res = await fetch(
+            `https://jsonmock.hackerrank.com/api/stocks?date=${formattedDate}`,
+          );
+          let data = await res.json();
+          console.log(data);
+          let stockData = data.data;
+          if (stockData.length > 0) {
+            stockData.forEach((stock) => {
+              let tr = document.createElement("tr");
+              let date = document.createElement("td");
+              let open = document.createElement("td");
+              let high = document.createElement("td");
+              let low = document.createElement("td");
+              let close = document.createElement("td");
+
+              date.textContent = stock.date;
+              open.textContent = stock.open;
+              high.textContent = stock.high;
+              low.textContent = stock.low;
+              close.textContent = stock.close;
+
+              tr.appendChild(date);
+              tr.appendChild(open);
+              tr.appendChild(high);
+              tr.appendChild(low);
+              tr.appendChild(close);
+
+              tbody.appendChild(tr);
+            });
+          } else {
+            let tr = document.createElement("tr");
+            let message = document.createElement("td");
+            message.colSpan = 5;
+            message.textContent = "No Data Found!";
+            tr.appendChild(message);
+            tbody.appendChild(tr);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
