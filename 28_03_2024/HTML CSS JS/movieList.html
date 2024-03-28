@@ -77,17 +77,15 @@
             let year = document.createElement("td");
             let description = document.createElement("td");
 
-            if (movie.title.toLowerCase().startsWith("t")) {
-              sno.textContent = index + 1;
-              title.textContent = movie.title;
-              year.textContent = movie.year;
-              description.textContent = movie.description;
+            sno.textContent = index + 1;
+            title.textContent = movie.title;
+            year.textContent = movie.year;
+            description.textContent = movie.description;
 
-              tr.appendChild(sno);
-              tr.appendChild(title);
-              tr.appendChild(year);
-              tr.appendChild(description);
-            }
+            tr.appendChild(sno);
+            tr.appendChild(title);
+            tr.appendChild(year);
+            tr.appendChild(description);
 
             tbody.appendChild(tr);
           });
