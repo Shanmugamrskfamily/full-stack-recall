@@ -2,19 +2,19 @@ let ar=[3,4,3,5,3,6];
 
 let count={};
 
-ar.forEach(n=>{
-    if(count[n]){
-        count[n]++;
+ar.forEach(num=>{
+    if(count[num]){
+        count[num]++;
     }
     else{
-        count[n]=1;
+        count[num]=1;
     }
 });
 
-let res=[];
+let output=[];
 
-for(let n in count){
-    res.push(`${n}:${count[n]}`);
+for(let num in count){
+    output.push(`${num}:${count[num]}`);
 }
 
-console.log(res);
+console.log(output);
