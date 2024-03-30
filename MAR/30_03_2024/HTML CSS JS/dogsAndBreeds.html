@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dogs and Breeds</title>
+    <style>
+      body {
+        margin: 10px;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      h1 {
+        text-align: center;
+      }
+      th,
+      td {
+        padding: 8px;
+        border: 1px solid black;
+      }
+
+      th {
+        background-color: brown;
+        color: white;
+        text-align: center;
+      }
+
+      tr {
+        background-color: rgb(202, 202, 82);
+      }
+
+      tr:nth-child(even) {
+        background-color: bisque;
+      }
+
+      tbody tr:hover {
+        background-color: red;
+        color: whitesmoke;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dogs and Breeds</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Breed</th>
+          <th>Sub-Breeds</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let tbody = document.getElementById("tbody");
+        try {
+          let res = await fetch("https://dog.ceo/api/breeds/list/all");
+          let data = await res.json();
+          let BreedData = data.message;
+
+          Object.keys(BreedData).forEach((breed, index) => {
+            let tr = document.createElement("tr");
+            let sno = document.createElement("td");
+            let breedName = document.createElement("td");
+            let subBreed = document.createElement("td");
+
+            sno.textContent = index + 1;
+            breedName.textContent = breed.toUpperCase();
+            subBreed.textContent = BreedData[breed].join(", ");
+
+            tr.appendChild(sno);
+            tr.appendChild(breedName);
+            tr.appendChild(subBreed);
+            tbody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>

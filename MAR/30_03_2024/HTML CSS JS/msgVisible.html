@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .button-area {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 200px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      .msg-area {
+        text-align: center;
+      }
+
+      #msg {
+        display: none;
+        margin-top: 20px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button-area">
+      <button class="btn btn-primary" type="button" onclick="showMsg()">
+        Click Me
+      </button>
+    </div>
+    <div class="msg-area">
+      <p id="msg">Hello... You Have Clicked Button!</p>
+    </div>
+    <script>
+      function showMsg() {
+        let msg = document.getElementById("msg");
+        msg.style.display = msg.style.display === "none" ? "block" : "none";
+      }
+    </script>
+  </body>
+</html>
