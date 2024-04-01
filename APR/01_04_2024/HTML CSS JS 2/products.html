@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .card {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        width: 300px;
+        padding: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .card img {
+        width: 100%;
+        height: 250px;
+      }
+
+      .card h3 {
+        margin: 10px 0;
+      }
+
+      .card p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Store</h1>
+    <div id="products_area" class="container"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let products_area = document.getElementById("products_area");
+
+        let res = await fetch("https://fakestoreapi.com/products");
+        let data = await res.json();
+        console.log(data);
+        data.forEach((product) => {
+          let card = document.createElement("div");
+          card.classList.add("card");
+
+          let image = document.createElement("img");
+          image.src = product.image;
+
+          let title = document.createElement("h3");
+          title.textContent = product.title;
+
+          let price = document.createElement("p");
+          price.textContent = `$${product.price}`;
+
+          let description = document.createElement("p");
+          description.textContent = product.description;
+
+          card.appendChild(image);
+          card.appendChild(title);
+          card.appendChild(price);
+          card.appendChild(description);
+          products_area.appendChild(card);
+        });
+      });
+    </script>
+  </body>
+</html>
