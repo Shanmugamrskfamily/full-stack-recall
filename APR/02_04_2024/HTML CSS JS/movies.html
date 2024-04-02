@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      th,
+      td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Movies</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Movie Title</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        let tbody = document.getElementById("tbody");
+        try {
+          let res = await fetch(
+            "https://gitlab.com/gvanderput/gerard-movie-filtering/-/raw/master/data/movies.json",
+          );
+          let data = await res.json();
+          console.log(data);
+          data.forEach((movie) => {
+            if (parseInt(movie.year) === 2020) {
+              let tr = document.createElement("tr");
+              let title = document.createElement("td");
+              let year = document.createElement("td");
+
+              title.textContent = movie.title;
+              year.textContent = movie.year;
+
+              tr.appendChild(title);
+              tr.appendChild(year);
+              tbody.appendChild(tr);
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
